@@ -1,0 +1,2 @@
+local-storage:
+  temporary-directory: 'docs'
