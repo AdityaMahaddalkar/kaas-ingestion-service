@@ -1,2 +1,6 @@
 local-storage:
   temporary-directory: 'docs'
+
+kafka:
+  bootstrap-server: 'http://127.0.0.1:9200'
+  chunk-processing-topic: 'chunks'
