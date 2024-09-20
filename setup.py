@@ -7,5 +7,7 @@ setup(
     author='Aditya Mahaddalkar',
     author_email='adityam1311@gmail.com',
     description='Ingestion service for KaaS project',
-    packages=find_packages()
+    packages=find_packages(
+        exclude=['test', 'test.*']
+    )
 )
