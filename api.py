@@ -2,11 +2,14 @@ import os
 
 from flask import Flask, request, jsonify
 
-from constants import TEMPORARY_DOCUMENTS_STORAGE_DIRECTORY
+from config import Config
 
 app = Flask(__name__)
+config = Config().get_config()
 
-os.makedirs(TEMPORARY_DOCUMENTS_STORAGE_DIRECTORY, exist_ok=True)
+temporary_directory_for_file_storage = config['local-storage']['temporary-directory']
+
+os.makedirs(temporary_directory_for_file_storage, exist_ok=True)
 
 
 @app.route('/ingest', methods=['POST'])
@@ -18,7 +21,7 @@ async def upload_files():
 
     for file in files:
         # Process the file here (e.g., save it to a specific directory)
-        file.save(f'{TEMPORARY_DOCUMENTS_STORAGE_DIRECTORY}/{file.filename}')
+        file.save(f'{temporary_directory_for_file_storage}/{file.filename}')
 
     return jsonify({'message': 'Files uploaded successfully.'}), 200
 
