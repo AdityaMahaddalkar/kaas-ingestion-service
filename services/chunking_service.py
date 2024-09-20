@@ -7,6 +7,7 @@ from kafka import KafkaProducer
 from langchain_community.document_loaders import BSHTMLLoader
 
 from config import Config
+from models.chunk_entity import ChunkEntity
 
 
 class ChunkingService:
@@ -19,7 +20,7 @@ class ChunkingService:
         self.kafka_producer = KafkaProducer(
             bootstrap_servers=self.bootstrap_server,
             compression_type='gzip',
-            value_serializer=lambda v: json.dumps(v).encode('utf-8')
+            value_serializer=ChunkEntity.serialize
         )
 
     def run(self):
@@ -31,13 +32,13 @@ class ChunkingService:
 
             for doc in docs:
                 unique_id = str(uuid.uuid4())
-                doc_json = {
-                    'chunk_id': unique_id,
-                    'chunk': doc.page_content,
-                    'source': doc.metadata['source']
-                }
+                doc_object = ChunkEntity(
+                    chunk_id=unique_id,
+                    chunk=doc.page_content,
+                    source=doc.metadata['source']
+                )
 
-                self.kafka_producer.send(self.chunk_topic, unique_id, doc_json)
+                self.kafka_producer.send(self.chunk_topic, unique_id, doc_object)
 
         with ThreadPoolExecutor(max_workers=10) as executor:
             executor.submit(load_and_split_threadsafe, full_file_paths)

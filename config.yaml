@@ -2,5 +2,12 @@ local-storage:
   temporary-directory: 'docs'
 
 kafka:
-  bootstrap-server: 'http://127.0.0.1:9200'
+  bootstrap-server: '127.0.0.1:9092'
   chunk-processing-topic: 'chunks'
+
+marqo:
+  connection-string: 'http://127.0.0.1:8882'
+  index-name: 'chunks'
+  embedding-model: 'hf/e5-base-v2'
+  insertion-batch-size: 10
+  tensor-field: 'chunk'
