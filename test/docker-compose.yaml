@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   zookeeper:
@@ -26,3 +26,13 @@ services:
       - "8882:8882"
     expose:
       - "8882"
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=secret_password
+      - POSTGRES_USER=postgres_user
+    volumes:
+      - ./pg:/var/lib/postgresql/data

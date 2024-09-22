@@ -1,8 +1,5 @@
-import logging
-
 import marqo
-from kafka import KafkaProducer, KafkaConsumer
-from marqo.errors import IndexAlreadyExistsError
+from kafka import KafkaConsumer
 
 from config import Config
 from models.chunk_entity import ChunkEntity
