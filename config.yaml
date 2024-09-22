@@ -11,3 +11,15 @@ marqo:
   embedding-model: 'hf/e5-base-v2'
   insertion-batch-size: 10
   tensor-field: 'chunk'
+
+postgres:
+  host: '127.0.0.1'
+  port: 5432
+  username: 'postgres_user'
+  password: 'secret_password'
+  database: 'postgres'
+  table: 'chunks'
+  insertion-batch-size: 500
+
+logging:
+  level: 'INFO'
